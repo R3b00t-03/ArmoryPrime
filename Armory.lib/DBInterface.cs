@@ -81,6 +81,25 @@ namespace Armory.lib
             }
         }
 
+        /// <summary>
+        /// Only Works with Auto Increment on ID
+        /// </summary>
+        /// <param name="invItem"></param>
+        public void add_new_item(models.Inventory invItem)
+        {
+            string query = $"INSERT INTO Inventar (Artikel, Bestand, Mindestbestand) VALUES ({invItem.Artikel}, {invItem.Bestand}, {invItem.Mindestbestand});";
+            SqlCommand command = new SqlCommand(query, _con);
+            try
+            {
+                int updated_rows = command.ExecuteNonQuery();
+                Debug.WriteLine($"INFO: Updated {updated_rows} rows!");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
         ~DBInterface()
         {
             _con.Close();
